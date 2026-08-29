@@ -515,9 +515,9 @@ function Telao({ estacao }) {
   const [modo, setModo] = useState("galeria");     // 'galeria' | 'apresentacao'
   const [rodando, setRodando] = useState(true);
   const [admin, setAdmin] = useState(false);
-  const [pin, setPin] = useState("");
-  const [autorizado, setAutorizado] = useState(false);
-  const PIN_OK = "1234"; // mock — no produto vem da config
+  // Controles locais da estação: não concedem acesso administrativo.
+  // São exibidos apenas quando a tela é aberta explicitamente com ?painel=1.
+  const modoOperador = _samPainelAtivo();
 
   useEffect(() => {
     if (modo !== "galeria" || !rodando || lista.length < 2) return;
@@ -546,46 +546,43 @@ function Telao({ estacao }) {
         <Monitor size={15} /> Estação {estacao} · {modo === "galeria" ? "Galeria" : "Apresentação"}{lista.length ? ` · ${(idx % lista.length) + 1}/${lista.length}` : ""}
       </div>
 
-      <button onClick={() => setAdmin(true)} title="Operador" style={{ position:"absolute", top:14, right:14, width:34, height:34, borderRadius:9, border:"1px solid #1E2630", background:"#10151C", color:"#3A4350", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>
-        <Lock size={15} />
-      </button>
+      {modoOperador && (
+        <button onClick={() => setAdmin(true)} title="Controles locais da estação" style={{ position:"absolute", top:14, right:14, width:34, height:34, borderRadius:9, border:"1px solid #1E2630", background:"#10151C", color:"#3A4350", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>
+          <Monitor size={15} />
+        </button>
+      )}
 
-      {admin && (
-        <div style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.6)", display:"flex", alignItems:"center", justifyContent:"center", padding:20, zIndex:50 }} onClick={() => { setAdmin(false); setPin(""); }}>
+      {modoOperador && admin && (
+        <div style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.6)", display:"flex", alignItems:"center", justifyContent:"center", padding:20, zIndex:50 }} onClick={() => setAdmin(false)}>
           <div onClick={(e) => e.stopPropagation()} style={{ background:"#fff", borderRadius:16, padding:24, width:"100%", maxWidth:360 }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:14 }}>
-              <div style={{ fontWeight:800, color:C.tinta, fontSize:16 }}>Operador · Estação {estacao}</div>
-              <button onClick={() => { setAdmin(false); setPin(""); }} style={{ border:"none", background:"transparent", cursor:"pointer", color:C.cinza }}><X size={18} /></button>
-            </div>
-            {!autorizado ? (
               <div>
-                <div style={{ fontSize:13, color:C.cinza, marginBottom:8 }}>Digite o PIN do operador</div>
-                <input value={pin} onChange={(e) => setPin(e.target.value)} inputMode="numeric" placeholder="• • • •" style={{ width:"100%", padding:"11px", border:"1px solid #D6DFE9", borderRadius:10, fontSize:18, textAlign:"center", letterSpacing:6, boxSizing:"border-box" }} />
-                <button onClick={() => { if (pin === PIN_OK) setAutorizado(true); else setPin(""); }} style={{ width:"100%", marginTop:12, background:C.azul, color:"#fff", border:"none", borderRadius:10, padding:12, fontWeight:700, cursor:"pointer" }}>Entrar</button>
-                <div style={{ fontSize:11, color:C.cinza, marginTop:8, textAlign:"center" }}>(protótipo: PIN 1234)</div>
+                <div style={{ fontWeight:800, color:C.tinta, fontSize:16 }}>Controles locais · Estação {estacao}</div>
+                <div style={{ fontSize:11.5, color:C.cinza, marginTop:3 }}>Alteram somente esta tela; não concedem acesso à curadoria.</div>
               </div>
-            ) : (
-              <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
-                <div style={{ display:"flex", gap:8 }}>
-                  <button onClick={() => setModo("galeria")} style={ctrlBtn(modo==="galeria")}>Galeria</button>
-                  <button onClick={() => setModo("apresentacao")} style={ctrlBtn(modo==="apresentacao")}>Apresentação</button>
-                </div>
-                <div style={{ display:"flex", gap:8 }}>
-                  <button onClick={() => setRodando((r) => !r)} style={ctrlBtn(false)}>{rodando ? <><Pause size={15}/> Pausar</> : <><Play size={15}/> Retomar</>}</button>
-                  <button onClick={() => lista.length && setIdx((p) => (p+1) % lista.length)} style={ctrlBtn(false)}><SkipForward size={15}/> Próximo</button>
-                </div>
-                <div style={{ fontSize:12, color:C.cinza, marginTop:4, marginBottom:4 }}>Fixar trabalho:</div>
-                <div style={{ maxHeight:160, overflowY:"auto", display:"flex", flexDirection:"column", gap:4 }}>
-                  {lista.map((tr, i) => (
-                    <button key={tr.id} onClick={() => { setIdx(i); setModo("apresentacao"); }} style={{ textAlign:"left", border:"none", background:i===idx?C.cianoClaro:"#F4F7FA", borderRadius:8, padding:"8px 10px", fontSize:12.5, color:i===idx?C.azul:C.tinta, cursor:"pointer" }}>
-                      {tr.id} · {tr.titulo.slice(0,40)}…
-                    </button>
-                  ))}
-                </div>
+              <button onClick={() => setAdmin(false)} style={{ border:"none", background:"transparent", cursor:"pointer", color:C.cinza }}><X size={18} /></button>
+            </div>
+            <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+              <div style={{ display:"flex", gap:8 }}>
+                <button onClick={() => setModo("galeria")} style={ctrlBtn(modo==="galeria")}>Galeria</button>
+                <button onClick={() => setModo("apresentacao")} style={ctrlBtn(modo==="apresentacao")}>Apresentação</button>
               </div>
-            )}
+              <div style={{ display:"flex", gap:8 }}>
+                <button onClick={() => setRodando((r) => !r)} style={ctrlBtn(false)}>{rodando ? <><Pause size={15}/> Pausar</> : <><Play size={15}/> Retomar</>}</button>
+                <button onClick={() => lista.length && setIdx((p) => (p+1) % lista.length)} style={ctrlBtn(false)}><SkipForward size={15}/> Próximo</button>
+              </div>
+              <div style={{ fontSize:12, color:C.cinza, marginTop:4, marginBottom:4 }}>Fixar trabalho:</div>
+              <div style={{ maxHeight:160, overflowY:"auto", display:"flex", flexDirection:"column", gap:4 }}>
+                {lista.map((tr, i) => (
+                  <button key={tr.id} onClick={() => { setIdx(i); setModo("apresentacao"); }} style={{ textAlign:"left", border:"none", background:i===idx?C.cianoClaro:"#F4F7FA", borderRadius:8, padding:"8px 10px", fontSize:12.5, color:i===idx?C.azul:C.tinta, cursor:"pointer" }}>
+                    {tr.id} · {tr.titulo.slice(0,40)}…
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
+      )}
       )}
     </div>
   );
