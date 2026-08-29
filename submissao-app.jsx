@@ -110,16 +110,17 @@ function parseEditRoute(){
   const id = q.get("id"), token = q.get("token");
   return (id && token) ? { id, token } : null;
 }
-/* link pessoal de material (/material?t=TOKEN) derivado da URL atual,
-   funcionando tanto em preview (submissao.html) quanto em produção (/submissao) */
-function materialUrl(token) {
+/* link para a página de material, autenticada pelo Google.
+   Nenhuma credencial ou token pessoal é colocado na URL. */
+function materialUrl() {
   try {
     const u = new URL(window.location.href);
-    u.hash = ""; u.search = "?t=" + encodeURIComponent(token);
+    u.hash = "";
+    u.search = "";
     if (/submissao/.test(u.pathname)) u.pathname = u.pathname.replace("submissao", "material");
     else u.pathname = u.pathname.replace(/[^/]*$/, "material.html");
     return u.toString();
-  } catch (e) { return "material.html?t=" + encodeURIComponent(token); }
+  } catch (e) { return "material.html"; }
 }
 /* caixa do link de material exibida na confirmação da submissão */
 function MaterialLinkBox({ url }) {
@@ -884,7 +885,7 @@ function SubmissaoApp() {
               <div style={{ width:56, height:56, borderRadius:"50%", background:`${C.ciano}1A`, display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 14px" }}><CheckCircle2 size={32} color={C.ciano}/></div>
               <div style={{ fontWeight:800, fontSize:18, marginBottom:8 }}>{edicao ? "Atualização recebida!" : "Trabalho recebido!"}</div>
               <div style={{ fontSize:14, color:C.cinza, lineHeight:1.5 }}>Código <strong style={{ color:C.tinta }}>{resultado.id}</strong>. {edicao ? "A nova versão substitui a anterior e segue para a curadoria." : "Enviamos um e-mail de confirmação com o link para revisar ou ajustar."}</div>
-              {ehFase8 && resultado.token && <MaterialLinkBox url={materialUrl(resultado.token)} />}
+              {ehFase8 && resultado.token && <MaterialLinkBox url={materialUrl()} />}
             </>) : (<>
               <div style={{ width:56, height:56, borderRadius:"50%", background:"#FBEAE8", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 14px" }}><X size={30} color={C.erro}/></div>
               <div style={{ fontWeight:800, fontSize:18, marginBottom:8 }}>Não foi possível enviar</div>
