@@ -583,7 +583,6 @@ function Telao({ estacao }) {
           </div>
         </div>
       )}
-      )}
     </div>
   );
 }
