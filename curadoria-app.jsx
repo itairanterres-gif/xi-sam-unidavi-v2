@@ -8,9 +8,9 @@
    ============================================================ */
 const { useState, useMemo, useEffect } = React;
 
-// e-mail e senha da curadora guardados entre recargas (login persistente)
+// Apenas o e-mail pode ser lembrado para conveniência.
+// A senha existe somente em memória durante a sessão da página.
 const LS_CURADORIA_EMAIL = "sam_curadoria_email";
-const LS_CURADORIA_SENHA = "sam_curadoria_senha";
 
 // MESMA URL /exec usada em submissao.html e nas demais telas:
 const API_URL = "https://script.google.com/macros/s/AKfycbw8GrSUw3Ck8Pt4qolDD44xy_4Y0vXv9KaUfEUZKFUk7qKUWyE8kJRpTqSX9AtdNRCrOg/exec";
@@ -650,59 +650,18 @@ function Revalidando() {
 }
 
 function CuradoriaApp() {
-  const [sessao, setSessao] = useState(null);        // { email, trabalhos }
+  const [sessao, setSessao] = useState(null);        // { email, senha, trabalhos }; senha somente em memória
   const [abertoId, setAbertoId] = useState(null);
-  // fase de bootstrap: se há e-mail guardado, revalida antes de mostrar qualquer tela
-  const [fase, setFase] = useState(() => {
-    try { return localStorage.getItem(LS_CURADORIA_EMAIL) ? "revalidando" : "login"; }
-    catch (e) { return "login"; }
+  const [emailInicial, setEmailInicial] = useState(() => {
+    try { return (localStorage.getItem(LS_CURADORIA_EMAIL) || "").trim(); }
+    catch (e) { return ""; }
   });
-  const [emailInicial, setEmailInicial] = useState("");
-  const [senhaInicial, setSenhaInicial] = useState("");
   const [erroInicial, setErroInicial] = useState("");
 
-  // Revalidação automática do e-mail guardado (mesma chamada do login).
-  useEffect(() => {
-    if (fase !== "revalidando") return;
-    let vivo = true;
-    let armazenado = "";
-    let senhaArmazenada = "";
-    try { armazenado = (localStorage.getItem(LS_CURADORIA_EMAIL) || "").trim(); } catch (e) {}
-    try { senhaArmazenada = localStorage.getItem(LS_CURADORIA_SENHA) || ""; } catch (e) {}
-    if (!armazenado) { setFase("login"); return; }
-    (async () => {
-      try {
-        const r = await fetch(API_URL + "?action=curadoria&email=" + encodeURIComponent(armazenado) + "&senha=" + encodeURIComponent(senhaArmazenada));
-        const res = await r.json();
-        if (!vivo) return;
-        if (res.ok) {
-          setSessao({ email: armazenado, senha: senhaArmazenada, trabalhos: res.trabalhos || [] });
-          setFase("ok");
-        } else {
-          // e-mail/senha inválidos ou removidos → limpa e cai no login com a mensagem do backend
-          try { localStorage.removeItem(LS_CURADORIA_EMAIL); localStorage.removeItem(LS_CURADORIA_SENHA); } catch (e) {}
-          setEmailInicial(""); setSenhaInicial("");
-          setErroInicial(res.erro || "E-mail não autorizado para a curadoria.");
-          setFase("login");
-        }
-      } catch (err) {
-        if (!vivo) return;
-        // falha de rede → cai no login com erro padrão (e-mail/senha pré-preenchidos p/ tentar de novo)
-        setEmailInicial(armazenado); setSenhaInicial(senhaArmazenada);
-        setErroInicial("Falha de conexão com o servidor. Tente novamente.");
-        setFase("login");
-      }
-    })();
-    return () => { vivo = false; };
-  }, [fase]);
-
-  if (fase === "revalidando") return <Revalidando />;
-
-  if (!sessao) return <Login emailInicial={emailInicial} senhaInicial={senhaInicial} erroInicial={erroInicial} onOk={(email, senha, trabalhos) => {
-    try { localStorage.setItem(LS_CURADORIA_EMAIL, email); localStorage.setItem(LS_CURADORIA_SENHA, senha || ""); } catch (e) {}
-    setEmailInicial(""); setSenhaInicial(""); setErroInicial("");
+  if (!sessao) return <Login emailInicial={emailInicial} senhaInicial="" erroInicial={erroInicial} onOk={(email, senha, trabalhos) => {
+    try { localStorage.setItem(LS_CURADORIA_EMAIL, email); } catch (e) {}
+    setEmailInicial(email); setErroInicial("");
     setSessao({ email, senha, trabalhos });
-    setFase("ok");
   }} />;
 
   const atualizar = (t) => {
@@ -711,10 +670,9 @@ function CuradoriaApp() {
   const aberto = abertoId != null ? sessao.trabalhos.find((t) => t.id === abertoId) : null;
 
   const sair = () => {
-    try { localStorage.removeItem(LS_CURADORIA_EMAIL); localStorage.removeItem(LS_CURADORIA_SENHA); } catch (e) {}
+    try { localStorage.removeItem(LS_CURADORIA_EMAIL); } catch (e) {}
     setSessao(null); setAbertoId(null);
-    setEmailInicial(""); setSenhaInicial(""); setErroInicial("");
-    setFase("login");
+    setEmailInicial(""); setErroInicial("");
   };
 
   if (aberto) return <Ficha t={aberto} email={sessao.email} senha={sessao.senha} onVoltar={()=>setAbertoId(null)} onAtualizar={(t)=>{ atualizar(t); setAbertoId(null); }} />;
