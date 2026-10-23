@@ -34,7 +34,7 @@ Página de apoio à apresentação sobre excesso de exames, valor preditivo posi
 ## 5. Prevenção quaternária e fundamentos históricos
 
 - **Jamoulle M, Gomes LF. (2014).** *Prevenção Quaternária e Limites em Medicina*. **Rev Bras Med Fam Comunidade. 9(31):186–191.** [Texto integral](https://rbmfc.org.br/rbmfc/article/view/867) · [DOI](https://doi.org/10.5712/rbmfc9(31)867).
-- **Miller SR. (1932).** *Contemporary Fads and Fallacies, Therapeutic and Diagnostic, Which Reflect Dangerous Professional Credulity*. **Pennsylvania Medical Journal. 35:347–353**, citado na apresentação. *Cópia digitalizada consultada na preparação da aula; ainda sem URL público direto verificado. Não atribuir DOI.*
+- **Miller SR. (1932).** *Contemporary Fads and Fallacies, Therapeutic and Diagnostic, Which Reflect Dangerous Professional Credulity*. **Pennsylvania Medical Journal. 35(6):347–354.** [Volume 35 digitalizado no Internet Archive](https://archive.org/details/pennsylvaniamedi3519medi) · [Catálogo da Harvard Library que identifica o volume](https://guides.library.harvard.edu/c.php?g=947422&p=7660492). *Localizar o artigo na edição de março de 1932, a partir da p. 347. Link para o volume integral, não para página individual do artigo.*
 - **Fisher RA. (1925).** *Statistical Methods for Research Workers*. Edinburgh: Oliver and Boyd. [Registro digital de 1925](https://www.digital.archives.go.jp/file/en/1140076). *Livro histórico, não artigo científico.*
 - **Salsburg D. (2009, edição brasileira).** *Uma senhora toma chá: como a estatística revolucionou a ciência no século XX*. Zahar. *Livro de leitura complementar; não confundir com artigo de pesquisa.*
 
