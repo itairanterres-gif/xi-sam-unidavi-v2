@@ -1,5 +1,5 @@
 /* ============================================================
-   XI SAM 2026 — PAINÉIS LED (384×768)
+   XII SAM 2026 — PAINÉIS LED (384×768)
    Gera 2 painéis por dia a partir de window.PROGRAMA:
      · Apresentações orais  (acento ciano)
      · Pôsteres             (acento âmbar/ouro)
@@ -58,7 +58,7 @@
     return `<div class="panel" data-tipo="${tipo}" style="--accent:${accent};--lines:${lines}">
       <div class="pHead">
         <div class="brandRow">
-          <span class="wm">XI<b>SAM</b><i>26</i></span>
+          <span class="wm">XII<b>SAM</b><i>26</i></span>
           <span class="ev">SEMANA ACADÊMICA DA MEDICINA · UNIDAVI</span>
         </div>
         <div class="typeBand">
@@ -82,7 +82,7 @@
             <div class="qrTxt"><b>AO VIVO</b><span>YouTube · Universo Unidavi</span></div>
           </div>` : ""}
         </div>
-        <img class="logos" src="assets/logo-strip.jpeg" alt="UNIDAVI Medicina · LigaMed · XI SAM">
+        <img class="logos" src="assets/logo-strip.jpeg" alt="UNIDAVI Medicina · LigaMed · XII SAM">
       </div>
     </div>`;
   }

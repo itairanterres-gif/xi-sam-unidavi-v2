@@ -1,5 +1,5 @@
 /* ============================================================
-   XI SAM 2026 — TELAS: Home, PaginaTrabalho, Telao
+   XII SAM 2026 — TELAS: Home, PaginaTrabalho, Telao
    ============================================================ */
 
 /* ---------------- HOME (landing + programa) ---------------- */
@@ -48,7 +48,7 @@ function StatusTrabalhos({ status, recarregar }) {
   return null;
 }
 /* ---------------- ARQUIVO DE EDIÇÕES (na Home) ----------------
-   Lê o manifesto leve edicoes-index.json (nível-hero das edições I–X);
+   Lê o manifesto leve edicoes-index.json (nível-hero das edições I–XI);
    cada card abre a página da edição arquivada (edicao.html#/edicao/:id). */
 function ArquivoEdicoes() {
   const [eds, setEds] = useState(null);
@@ -92,7 +92,7 @@ function ArquivoEdicoes() {
 function Home() {
   const painel = useMemo(_samPainelAtivo, []);
   // Abre no dia de hoje quando a visita acontece DENTRO da semana do evento
-  // (22–26/06/2026); fora dessa janela, abre no padrão (1º dia, 22/06).
+  // (23–27/11/2026); fora dessa janela, abre no padrão (1º dia, 23/11).
   // Em modo painel (telão), sempre tenta começar no dia de hoje.
   const [dia, setDia] = useState(() => {
     // Em painel (telão) o dia é sempre derivado de hoje e auto-rotaciona.
@@ -105,12 +105,12 @@ function Home() {
       } catch (e) {}
     }
     const hoje = _samDiaDeHoje();                                  // dia de DIAS cujo DD/MM bate com hoje, ou null
-    const naSemana = hoje && new Date().getFullYear() === 2026;    // 22–26/06/2026
+    const naSemana = hoje && new Date().getFullYear() === 2026;    // 23–27/11/2026
     return (painel && hoje) || (naSemana && hoje) || DIAS[0];
   });
   const [filtro, setFiltro] = useState("Todos");
   const [busca, setBusca] = useState(() => { try { return new URLSearchParams(window.location.search).get("q") || ""; } catch (e) { return ""; } });
-  const [escopo, setEscopo] = useState("edicao");        // "edicao" (XI) | "todas" (arquivo)
+  const [escopo, setEscopo] = useState("edicao");        // "edicao" (XII) | "todas" (arquivo)
   const todasEd = useTodasEdicoes(escopo === "todas");
   const { trabalhos, status, recarregar } = useTrabalhos();
   const buscaNorm = normalizaNome(busca);
@@ -156,7 +156,7 @@ function Home() {
             <img
               src={(window.__resources && window.__resources.heroDesktop) || "assets/hero-desktop.jpg"}
               width="1400" height="775"
-              alt="XI Semana Acadêmica da Medicina UNIDAVI · 22 a 26 de junho de 2026 · Auditório Célio Simão Martignago · Rio do Sul/SC"
+              alt="XII Semana Acadêmica da Medicina UNIDAVI · 23 a 27 de novembro de 2026 · Auditório Célio Simão Martignago · Rio do Sul/SC"
               style={{ width:"100%", height:"auto", display:"block" }}
             />
           </picture>
@@ -178,14 +178,14 @@ function Home() {
         {/* Busca — filtra orais + pôsteres de todos os dias por autor, título ou área */}
         <div style={{ position:"relative", marginBottom:16 }}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={C.cinza} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ position:"absolute", left:14, top:"50%", transform:"translateY(-50%)", pointerEvents:"none" }}><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
-          <input value={busca} onChange={(e) => setBusca(e.target.value)} placeholder={escopo === "todas" ? "Buscar nas dez edições anteriores…" : "Buscar trabalho, autor ou área…"} aria-label="Buscar trabalho, autor ou área"
+          <input value={busca} onChange={(e) => setBusca(e.target.value)} placeholder={escopo === "todas" ? "Buscar nas onze edições anteriores…" : "Buscar trabalho, autor ou área…"} aria-label="Buscar trabalho, autor ou área"
             style={{ width:"100%", padding:"13px 42px 13px 42px", border:"1px solid #E3EAF2", borderRadius:11, fontSize:14.5, color:C.tinta, background:"#fff", boxSizing:"border-box" }} />
           {busca && (
             <button onClick={() => setBusca("")} aria-label="Limpar busca" style={{ position:"absolute", right:8, top:"50%", transform:"translateY(-50%)", width:30, height:30, border:"none", background:"transparent", color:C.cinza, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", borderRadius:8 }}><X size={16} /></button>
           )}
         </div>
 
-        {/* Escopo da busca: nesta edição (XI, ao vivo) ou todas as edições do arquivo */}
+        {/* Escopo da busca: nesta edição (XII, ao vivo) ou todas as edições do arquivo */}
         <div style={{ display:"flex", alignItems:"center", gap:9, marginBottom:18, flexWrap:"wrap" }}>
           <span style={{ fontSize:12.5, color:C.cinza, fontWeight:600 }}>Buscar em:</span>
           <div style={{ display:"inline-flex", background:"#fff", border:"1px solid #E3EAF2", borderRadius:999, padding:3, gap:3 }}>
@@ -380,7 +380,7 @@ function Home() {
             por decisão de produto; EstadoVazio segue em uso no Telão.) */}
       </div>
       <ArquivoEdicoes />
-      <footer style={{ textAlign:"center", padding:"24px 16px 40px", color:C.cinza, fontSize:12 }}>XI SAM 2026 · Medicina UNIDAVI</footer>
+      <footer style={{ textAlign:"center", padding:"24px 16px 40px", color:C.cinza, fontSize:12 }}>XII SAM 2026 · Medicina UNIDAVI</footer>
     </div>
   );
 } 
@@ -399,7 +399,7 @@ function TelaSistema({ children }) {
             <ArrowLeft size={22} color="#fff" />
           </button>
           <div style={{ display:"flex", alignItems:"baseline", gap:8, minWidth:0 }}>
-            <span style={{ fontSize:15, fontWeight:800, whiteSpace:"nowrap" }}>XI SAM <span style={{ color:C.ciano }}>2026</span></span>
+            <span style={{ fontSize:15, fontWeight:800, whiteSpace:"nowrap" }}>XII SAM <span style={{ color:C.ciano }}>2026</span></span>
             <span style={{ fontSize:11.5, color:"rgba(255,255,255,0.78)", whiteSpace:"nowrap" }}>Medicina UNIDAVI</span>
           </div>
         </div>
@@ -596,11 +596,11 @@ function Sobre() {
       <SiteHeader />
       <div style={{ maxWidth:760, margin:"0 auto", padding:"30px 16px 70px" }}>
         <div style={{ fontSize:12, letterSpacing:2, fontWeight:700, color:C.ciano, marginBottom:8 }}>SOBRE</div>
-        <h1 style={{ fontSize:32, fontWeight:800, color:C.tinta, letterSpacing:-0.6, margin:"0 0 24px", lineHeight:1.1 }}>Sobre a XI SAM</h1>
+        <h1 style={{ fontSize:32, fontWeight:800, color:C.tinta, letterSpacing:-0.6, margin:"0 0 24px", lineHeight:1.1 }}>Sobre a XII SAM</h1>
 
         <div style={{ fontSize:16.5, lineHeight:1.7, color:C.tinta, display:"flex", flexDirection:"column", gap:18, textWrap:"pretty" }}>
           <p style={{ margin:0 }}>A Semana Acadêmica da Medicina é o momento em que o curso para para olhar o que produziu — e para celebrar quem produziu. Reúne estudantes, professores e a comunidade em torno do que há de mais vivo na formação médica: a pesquisa que nasce das inquietações de cada fase e amadurece até virar conhecimento compartilhado.</p>
-          <p style={{ margin:0 }}>Na XI SAM, os estudantes da 8ª fase apresentam seus Trabalhos de Curso já concluídos, em sessões orais; os da 7ª fase trazem seus projetos em pôster — os primeiros passos de pesquisas que seguirão sendo construídas. Entre uma apresentação e outra, há café, conversa e encontro, porque ciência também se faz no intervalo: na pergunta de corredor, na ideia que surge diante do trabalho do colega.</p>
+          <p style={{ margin:0 }}>Na XII SAM, os estudantes da 8ª fase apresentam seus Trabalhos de Curso já concluídos, em sessões orais; os da 7ª fase trazem seus projetos em pôster — os primeiros passos de pesquisas que seguirão sendo construídas. Entre uma apresentação e outra, há café, conversa e encontro, porque ciência também se faz no intervalo: na pergunta de corredor, na ideia que surge diante do trabalho do colega.</p>
           <p style={{ margin:0 }}>Mais do que uma vitrine, a SAM é formação: aprender a comunicar, a ouvir, a defender uma ideia e a acolher a crítica — ainda na graduação, aquilo que será parte da vida profissional.</p>
         </div>
 
@@ -608,7 +608,7 @@ function Sobre() {
         <div style={{ marginTop:28, background:`linear-gradient(135deg, ${C.azul}, ${C.azulEsc})`, color:"#fff", borderRadius:16, padding:"24px 26px" }}>
           <div style={{ ...linha, marginBottom:14 }}>
             <CalendarDays size={20} color={C.ciano} style={{ flexShrink:0, marginTop:1 }} />
-            <span style={{ fontSize:16, fontWeight:600 }}>Quando e onde · 22 a 26 de junho de 2026 · Rio do Sul, SC</span>
+            <span style={{ fontSize:16, fontWeight:600 }}>Quando e onde · 23 a 27 de novembro de 2026 · Rio do Sul, SC</span>
           </div>
           <div style={{ ...linha, marginBottom:10 }}>
             <Users size={20} color={C.ciano} style={{ flexShrink:0, marginTop:1 }} />
@@ -626,7 +626,7 @@ function Sobre() {
           <span>Transmissão ao vivo · canal Universo UNIDAVI (YouTube) · o botão “Assistir ao vivo” aparece na programação, junto ao dia, quando a transmissão daquele dia tem link</span>
         </div>
       </div>
-      <footer style={{ textAlign:"center", padding:"24px 16px 40px", color:C.cinza, fontSize:12 }}>XI SAM 2026 · Medicina UNIDAVI</footer>
+      <footer style={{ textAlign:"center", padding:"24px 16px 40px", color:C.cinza, fontSize:12 }}>XII SAM 2026 · Medicina UNIDAVI</footer>
     </div>
   );
 }

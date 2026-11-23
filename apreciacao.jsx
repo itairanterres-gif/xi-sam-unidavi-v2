@@ -1,5 +1,5 @@
 /* ============================================================
-   XI SAM 2026 — APRECIAÇÃO CIENTÍFICA (fluxo público)
+   XII SAM 2026 — APRECIAÇÃO CIENTÍFICA (fluxo público)
    Botão "Apreciar este trabalho" → quem é o apreciador →
    formulário (completo p/ docente · enxuto p/ público) → POST.
    Aberto (sem login). Reusa C, ícones e SAM_API_URL (globais).

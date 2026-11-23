@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XI SAM 2026 · Painéis LED (384×768)</title>
+  <title>XII SAM 2026 · Painéis LED (384×768)</title>
   <meta name="ext-resource-dependency" content="assets/logo-strip.jpeg" data-resource-id="logoStrip" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -101,7 +101,7 @@
 </head>
 <body>
   <div class="topbar">
-    <h1>XI SAM 2026 · Painéis LED</h1>
+    <h1>XII SAM 2026 · Painéis LED</h1>
     <span class="meta">384 × 768 px · 2 painéis por dia (orais + pôsteres)</span>
     <button id="dlAll" class="btn">⤓ Baixar todos (ZIP)</button>
     <span id="dlStatus" class="dlStatus"></span>
@@ -213,7 +213,7 @@
         }
         dlStatus.textContent = "Compactando…";
         const blob = await zip.generateAsync({ type: "blob" });
-        triggerDownload(blob, "paineis-led_XI-SAM.zip");
+        triggerDownload(blob, "paineis-led_XII-SAM.zip");
         dlStatus.textContent = "Pronto ✓";
         dlAllBtn.disabled = false;
       };

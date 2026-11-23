@@ -1,5 +1,5 @@
 /* ============================================================
-   XI SAM 2026 — "VER NA TV": overlay fullscreen com edição ao vivo.
+   XII SAM 2026 — "VER NA TV": overlay fullscreen com edição ao vivo.
    Submissão (rascunho) e Curadoria (trabalho) abrem o MESMO overlay.
    Layout: [barra topo · Fechar] · [pôster em iframe — reduz p/ caber,
    nunca coberto] · [barra inferior · Colunas 2/3 · Restaurar automático

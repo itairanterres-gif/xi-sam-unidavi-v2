@@ -1,5 +1,5 @@
 /* ============================================================
-   XI SAM 2026 — COMPONENTES
+   XII SAM 2026 — COMPONENTES
    3 modos: PosterVitrine | PosterCompleto | TrabalhoLeitura
    Telas auxiliares: SiteHeader
    Figuras aparecem NA SEÇÃO escolhida pelo aluno; principal em
@@ -1553,7 +1553,7 @@ function TrabalhoLeitura({ t, nav }) {
       )}
       <div style={{ borderTop:"1px solid #EEF2F6", padding:"18px 22px 30px", textAlign:"center" }}>
         <div style={{ fontSize:15, fontWeight:800, color:C.azul, letterSpacing:0.5 }}>SAM · MEDICINA UNIDAVI</div>
-        <div style={{ fontSize:12, color:C.cinza, marginTop:4 }}>XI Semana Acadêmica da Medicina · 2026</div>
+        <div style={{ fontSize:12, color:C.cinza, marginTop:4 }}>XII Semana Acadêmica da Medicina · 2026</div>
       </div>
       {apreciarAberto && <FluxoApreciacao t={t} onClose={() => setApreciarAberto(false)} />}
     </div>
